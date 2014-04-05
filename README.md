@@ -43,7 +43,8 @@ You need to know a little of supervisor and nginx, all config files are availabl
 1. 先建好主站，然后配置好dj_admin里的settings中的DATABASE
 2. 直接`python manage.py syncdb`
 3. 修改django syncdb 建立的表的编码：
-    - `ALTER TABLE ``django_admin_log`` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;`
+    - ``ALTER TABLE `django_admin_log` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;``
     - `ALTER TABLE django_admin_log MODIFY COLUMN object_repr VARCHAR(255)  CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;`
     - `ALTER TABLE django_admin_log MODIFY COLUMN change_message longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;`
+
 4. 嗯，然后就该咋用咋用.
