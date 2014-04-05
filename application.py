@@ -7,11 +7,14 @@
 
 # cat /etc/mime.types
 # application/octet-stream    crx
+import os
+os.chdir(os.path.split(os.path.abspath(__file__))[0])  # change cwd to level of application
 
 import sys
 reload(sys)
 sys.setdefaultencoding("utf8")
 
+import config
 import os.path
 import re
 import memcache
@@ -27,21 +30,17 @@ import handler.topic
 import handler.page
 import handler.notification
 
-from tornado.options import define, options
+from tornado.options import options
 from lib.loader import Loader
-from lib.session import Session, SessionManager
+from lib.session import SessionManager
 from jinja2 import Environment, FileSystemLoader
 
-define("port", default = 80, help = "run on the given port", type = int)
-define("mysql_host", default = "mysql_host", help = "community database host")
-define("mysql_database", default = "mysql_db_name", help = "community database name")
-define("mysql_user", default = "mysql_db_user", help = "community database user")
-define("mysql_password", default = "mysql_db_password", help = "community database password")
+config.setup_config()
 
 class Application(tornado.web.Application):
     def __init__(self):
         settings = dict(
-            blog_title = u"F2E Community",
+            blog_title = u"PyHack Community",
             template_path = os.path.join(os.path.dirname(__file__), "templates"),
             static_path = os.path.join(os.path.dirname(__file__), "static"),
             xsrf_cookies = True,
@@ -113,7 +112,8 @@ class Application(tornado.web.Application):
 def main():
     tornado.options.parse_command_line()
     http_server = tornado.httpserver.HTTPServer(Application())
-    http_server.listen(options.port)
+#    http_server.listen(options.port, address='127.0.0.1')
+    http_server.listen(options.port, address=options.address)
     tornado.ioloop.IOLoop.instance().start()
 
 if __name__ == "__main__":

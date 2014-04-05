@@ -9,13 +9,17 @@ import smtplib
 import sys
 import email
 from email.mime.text import MIMEText
+#from lib.mylog import mylogger  # from ../
+from mylog import mylogger  # from ../
 
-send_mail_host = 'smtp_host'
-send_mail_user = 'smtp_user'
-send_mail_user_name = u'send_mail_user_name'
-send_mail_pswd = 'send_mail_password'
-send_mail_postfix = 'send_mail_postfix'
-get_mail_user = 'get_mail_user'
+__debug = True
+
+send_mail_host = 'smtp.xx.xx'
+send_mail_user = 'xxuser'
+send_mail_user_name = u'PyHack 社区'
+send_mail_pswd = 'xxpw'
+send_mail_postfix = 'xx.xx'
+get_mail_user = 'xxxx'
 charset = 'utf-8'
 
 get_mail_postfix = 'get_mail_postfix'
@@ -28,6 +32,10 @@ def send(sub, content, reciver = get_mail_user + get_mail_postfix):
     msg['From'] = send_mail_address
     msg['to'] = to_adress = reciver
     try:
+        mylogger.info('sendmail: %r' % {
+            'to_adress': to_adress,
+            'msg': msg.as_string(),
+            })
         stp = smtplib.SMTP()
         stp.connect(send_mail_host)
         stp.login(send_mail_user,send_mail_pswd)
@@ -38,3 +46,5 @@ def send(sub, content, reciver = get_mail_user + get_mail_postfix):
         print(e)
         return False
 
+if __name__ == "__main__":
+    send('testing hello', 'this is just for testing', 'dawn110110@foxmail.com')

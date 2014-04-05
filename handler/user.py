@@ -231,7 +231,7 @@ class ForgotPasswordHandler(BaseHandler):
 
         # send password reset link to user
 
-        mail_title = u"前端社区（F2E.im）找回密码"
+        mail_title = u"PyHack 社区找回密码"
         template_variables = {"email": form.email.data, "new_password": new_password};
         template_variables["success_message"] = [u"新密码已发送至您的注册邮箱"]
         mail_content = self.render_string("user/forgot_password_mail.html", **template_variables)
@@ -340,7 +340,7 @@ class RegisterHandler(BaseHandler):
 
             # send register success mail to user
 
-            mail_title = u"前端社区（F2E.im）注册成功通知"
+            mail_title = u"PyHack 社区 注册成功通知"
             mail_content = self.render_string("user/register_mail.html")
             send(mail_title, mail_content, form.email.data)
 
